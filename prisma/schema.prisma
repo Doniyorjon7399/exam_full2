@@ -49,7 +49,7 @@ enum VideoQuality {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String   @id @default(uuid()) @db.Uuid
   username     String   @unique
   email        String   @unique
   passwordHash String   
@@ -67,7 +67,7 @@ model User {
 }
 
 model Profile {
-  id        String   @id @default(uuid())
+  id        String   @id @default(uuid())  @db.Uuid
   userId    String
   fullName  String   
   phone     String
@@ -78,7 +78,7 @@ model Profile {
 }
 
 model SubscriptionPlan {
-  id           String  @id @default(uuid())
+  id           String  @id @default(uuid())  @db.Uuid
   name         String
   price        Decimal
   durationDays Int     
@@ -89,7 +89,7 @@ model SubscriptionPlan {
 }
 
 model UserSubscription {
-  id         String   @id @default(uuid())
+  id         String   @id @default(uuid())  @db.Uuid
   userId     String
   planId     String
   startDate  DateTime @default(now()) 
@@ -104,7 +104,7 @@ model UserSubscription {
 }
 
 model Payment {
-  id                   String   @id @default(uuid())
+  id                   String   @id @default(uuid())  @db.Uuid
   userSubscriptionId   String  
   amount               Decimal
   paymentMethod        PaymentMethod 
@@ -117,7 +117,7 @@ model Payment {
 }
 
 model Category {
-  id          String @id @default(uuid())
+  id          String @id @default(uuid())  @db.Uuid
   name        String
   slug        String @unique
   description String
@@ -126,7 +126,7 @@ model Category {
 }
 
 model Movie {
-  id               String   @id @default(uuid())
+  id               String   @id @default(uuid())  @db.Uuid
   title            String
   slug             String   @unique
   description      String
@@ -148,7 +148,7 @@ model Movie {
 }
 
 model MovieCategory {
-  id         String @id @default(uuid())
+  id         String @id @default(uuid())  @db.Uuid
   movieId    String
   categoryId String
 
@@ -157,7 +157,7 @@ model MovieCategory {
 }
 
 model MovieFile {
-  id       String @id @default(uuid())
+  id       String @id @default(uuid())  @db.Uuid
   movieId  String
   fileUrl  String   
   quality  VideoQuality
@@ -167,7 +167,7 @@ model MovieFile {
 }
 
 model Favorite {
-  id        String   @id @default(uuid())
+  id        String   @id @default(uuid())  @db.Uuid
   userId    String
   movieId   String
   createdAt DateTime @default(now()) 
@@ -177,7 +177,7 @@ model Favorite {
 }
 
 model Review {
-  id        String   @id @default(uuid())
+  id        String   @id @default(uuid())  @db.Uuid
   userId    String
   movieId   String
   rating    Int
@@ -189,7 +189,7 @@ model Review {
 }
 
 model WatchHistory {
-  id                String   @id @default(uuid())
+  id                String   @id @default(uuid())  @db.Uuid
   userId            String
   movieId           String
   watchedDuration   Int     

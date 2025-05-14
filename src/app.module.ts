@@ -3,6 +3,14 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import Configuration from './config';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
+import { MovieModule } from './modules/movie/movie.module';
+import { CategoryModule } from './modules/category/category.module';
+import { UserProfileModule } from './modules/user-profile/user-profile.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SubscriptionModule } from './modules/subscription/subscription.module';
+import { FavoritesMoviesModule } from './modules/favorites-movies/favorites-movies.module';
+import { CommentsModule } from './modules/comments/comments.module';
+import { AdminProfileModule } from './modules/admin-profile/admin-profile.module';
 @Module({
   imports: [
     PrismaModule,
@@ -18,6 +26,14 @@ import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
       },
       inject: [ConfigService],
     }),
+    MovieModule,
+    CategoryModule,
+    UserProfileModule,
+    AuthModule,
+    SubscriptionModule,
+    FavoritesMoviesModule,
+    CommentsModule,
+    AdminProfileModule,
   ],
   controllers: [],
   providers: [],
