@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  admin
+  superadmin
+}
+
+enum SubscriptionStatus {
+  active
+  expired
+  canceled
+  pending_payment
+}
+
+enum PaymentMethod {
+  card
+  paypal
+  bank_transfer
+  crypto
+}
+
+enum PaymentStatus {
+  pending
+  completed
+  failed
+  refunded
+}
+
+enum SubscriptionType {
+  free
+  premium
+}
+
+enum VideoQuality {
+  P240
+  P360
+  P480
+  P720
+  P1080
+  P4K
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String   
+  role         Role     @default(user)
+  avatarUrl    String?
+  createdAt    DateTime @default(now()) 
+
+  // profiles           Profile[]
+  // subscriptions      UserSubscription[]
+  // payments           Payment[]
+  // createdMovies      Movie[]      @relation("MovieCreator")
+  // favorites          Favorite[]
+  // reviews            Review[]
+  // watchHistory       WatchHistory[]
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  userId    String
+  fullName  String   
+  phone     String
+  country   String
+  createdAt DateTime @default(now())
+
+  // user User @relation(fields: [userId], references: [id])
+}
+
+model SubscriptionPlan {
+  id           String  @id @default(uuid())
+  name         String
+  price        Decimal
+  durationDays Int     
+  features     Json
+  isActive     Boolean @default(true)
+
+  // subscriptions UserSubscription[]
+}
+
+model UserSubscription {
+  id         String   @id @default(uuid())
+  userId     String
+  planId     String
+  startDate  DateTime @default(now()) 
+  endDate    DateTime
+  status     SubscriptionStatus @default(pending_payment)
+  autoRenew  Boolean  @default(false) 
+  createdAt  DateTime @default(now())
+
+  // user User @relation(fields: [userId], references: [id])
+  // plan SubscriptionPlan @relation(fields: [planId], references: [id])
+  // payments Payment[]
+}
+
+model Payment {
+  id                   String   @id @default(uuid())
+  userSubscriptionId   String  
+  amount               Decimal
+  paymentMethod        PaymentMethod 
+  paymentDetails       Json    
+  status               PaymentStatus
+  externalTransactionId String 
+  createdAt            DateTime @default(now()) 
+
+  // userSubscription UserSubscription @relation(fields: [userSubscriptionId], references: [id])
+}
+
+model Category {
+  id          String @id @default(uuid())
+  name        String
+  slug        String @unique
+  description String
+
+  // movieCategories MovieCategory[]
+}
+
+model Movie {
+  id               String   @id @default(uuid())
+  title            String
+  slug             String   @unique
+  description      String
+  releaseYear      Int      
+  durationMinutes  Int      
+  posterUrl        String  
+  rating           Decimal
+  subscriptionType SubscriptionType @default(free) 
+  viewCount        Int      @default(0) 
+  createdBy        String   
+  createdAt        DateTime @default(now()) 
+
+  // creator User @relation("MovieCreator", fields: [createdBy], references: [id])
+  // movieCategories MovieCategory[]
+  // files MovieFile[]
+  // favorites Favorite[]
+  // reviews Review[]
+  // watchHistory WatchHistory[]
+}
+
+model MovieCategory {
+  id         String @id @default(uuid())
+  movieId    String
+  categoryId String
+
+  // movie    Movie    @relation(fields: [movieId], references: [id])
+  // category Category @relation(fields: [categoryId], references: [id])
+}
+
+model MovieFile {
+  id       String @id @default(uuid())
+  movieId  String
+  fileUrl  String   
+  quality  VideoQuality
+  language String   @default("uz")
+
+  // movie Movie @relation(fields: [movieId], references: [id])
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String
+  movieId   String
+  createdAt DateTime @default(now()) 
+
+  // user  User  @relation(fields: [userId], references: [id])
+  // movie Movie @relation(fields: [movieId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  userId    String
+  movieId   String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now()) 
+
+  // user  User  @relation(fields: [userId], references: [id])
+  // movie Movie @relation(fields: [movieId], references: [id])
+}
+
+model WatchHistory {
+  id                String   @id @default(uuid())
+  userId            String
+  movieId           String
+  watchedDuration   Int     
+  watchedPercentage Decimal 
+  lastWatched       DateTime @default(now()) 
+
+  // user  User  @relation(fields: [userId], references: [id])
+  // movie Movie @relation(fields: [movieId], references: [id])
+}
