@@ -11,6 +11,9 @@ import { SubscriptionModule } from './modules/subscription/subscription.module';
 import { FavoritesMoviesModule } from './modules/favorites-movies/favorites-movies.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { AdminProfileModule } from './modules/admin-profile/admin-profile.module';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthGuard } from './common/guards/auth.guard';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 @Module({
   imports: [
     PrismaModule,
@@ -36,6 +39,15 @@ import { AdminProfileModule } from './modules/admin-profile/admin-profile.module
     AdminProfileModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
+  ],
 })
 export class AppModule {}
