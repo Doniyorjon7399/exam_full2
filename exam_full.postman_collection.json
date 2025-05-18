@@ -1,0 +1,608 @@
+{
+	"info": {
+		"_postman_id": "f0f98935-94a2-44c2-af96-6f3ae860d468",
+		"name": "exam_full",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40691366",
+		"_collection_link": "https://galactic-firefly-264275.postman.co/workspace/test~9aef45b2-3265-452f-9a8f-3f74f14dd839/collection/40691366-f0f98935-94a2-44c2-af96-6f3ae860d468?action=share&source=collection_link&creator=40691366"
+	},
+	"item": [
+		{
+			"name": "Autentifikatsiya/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n          \"username\": \"alijon\",\r\n          \"email\": \"alijon@example.com\",\r\n          \"password\": \"12345678\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autentifikatsiya/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n          \"email\": \"alijon@example.com\",\r\n          \"password\": \"12345678\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Autentifikatsiya/logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \"full_name\": \"Aliyev Valijon\",\n       \"phone\": \"+998901234567\",\n       \"country\": \"Uzbekistan\"\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profil/update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \"full_name\": \"Aliyev Valijonjnjvfdvv\",\n       \"phone\": \"+998901234569\",\n       \"country\": \"Uzbekicdsckbkstan\"\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profil/get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscriptions/purchase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n       \"plan_id\": \"550e8400-e29b-41d4-a716-446655440002\",\n       \"payment_method\": \"card\",\n       \"auto_renew\": true,\n       \"payment_details\": {\n         \"card_number\": \"4242XXXXXXXX4242\",\n         \"expiry\": \"04/26\",\n         \"card_holder\": \"ALIJON VALIYEV\"\n       }\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/subscription/purchase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"subscription",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscriptions/plans",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/subscription/plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"subscription",
+						"plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies/slug",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/movies:slug",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"movies:slug"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movies/query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/movies?page=1&limit=20&category=action&search=qasoskorlar&subscription_type=free",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"movies"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "category",
+							"value": "action"
+						},
+						{
+							"key": "search",
+							"value": "qasoskorlar"
+						},
+						{
+							"key": "subscription_type",
+							"value": "free"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "favorites/get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/favorites",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "favorites/post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"movie_id\": \"550e8400-e29b-41d4-a716-446655440021\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/favorites",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"movie_id\": \"550e8400-e29b-41d4-a716-446655440021\" }"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/favorites/550e8400-e29b-41d4-a716-446655440021",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"favorites",
+						"550e8400-e29b-41d4-a716-446655440021"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviews",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \"rating\": 5,\n       \"comment\": \"Juda ajoyib film, ko'rishni tavsiya etaman!\"\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/movies/eb595fbd-b5bf-43cf-b297-cdcf67f90a80/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"movies",
+						"eb595fbd-b5bf-43cf-b297-cdcf67f90a80",
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviews",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \"rating\": 5,\n       \"comment\": \"Juda ajoyib film, ko'rishni tavsiya etaman!\"\n     }"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/movies/550e8400-e29b-41d4-a716-446655440021/reviews/550e8400-e29b-41d4-a716-446655440021",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"movies",
+						"550e8400-e29b-41d4-a716-446655440021",
+						"reviews",
+						"550e8400-e29b-41d4-a716-446655440021"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"movie_id\": \"550e8400-e29b-41d4-a716-446655440021\" }"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/doniyor/1080p.mp4"
+						},
+						{
+							"key": "quality",
+							"value": "720p",
+							"type": "text"
+						},
+						{
+							"key": "language",
+							"value": "uz",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/movies/f0d586af-43aa-467d-90df-2114c61034dc/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"movies",
+						"f0d586af-43aa-467d-90df-2114c61034dc",
+						"files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/all",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Yangilangan Sarlavha",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Yangilangan ta'rif",
+							"type": "text"
+						},
+						{
+							"key": "subscription_type",
+							"value": "premium",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/movies/904c4dda-4b0e-4f14-84de-792218ab7ea8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"movies",
+						"904c4dda-4b0e-4f14-84de-792218ab7ea8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Yangilangan Sarlavha",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Yangilangan ta'rif",
+							"type": "text"
+						},
+						{
+							"key": "subscription_type",
+							"value": "premium",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/movies/904c4dda-4b0e-4f14-84de-792218ab7ea8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"movies",
+						"904c4dda-4b0e-4f14-84de-792218ab7ea8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/addFile",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/create_admin",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"cca7ce23-113d-4255-a2c9-78edd92984bd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/promote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"promote"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
