@@ -6,6 +6,7 @@
     "deleteOutDir": true
   },
   "generateOptions": {
-    "baseDir": "modules"
+    "baseDir": "modules",
+    "spec": false
   }
 }

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from './prisma/prisma.module';
+import { PrismaModule } from './database/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import Configuration from './config';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
@@ -24,6 +24,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
+      global: true,
       useFactory: (configService: ConfigService) => {
         return configService.get('jwt_config') as JwtModuleOptions;
       },

@@ -1,34 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
-
-@Controller('comments')
+import { AddReviewDto } from 'src/dtos/add-review.dto';
+@Controller('movies')
 export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
-
-  @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  constructor(private readonly reviewsService: CommentsService) {}
+  @Post(':movie_id/reviews')
+  async addReview(
+    @Param('movie_id') movieId: string,
+    @Body() dto: AddReviewDto,
+    @Req() req: any,
+  ) {
+    const token = req.cookies?.token;
+    return this.reviewsService.addReview(movieId, dto, token);
   }
-
-  @Get()
-  findAll() {
-    return this.commentsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commentsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
-    return this.commentsService.update(+id, updateCommentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentsService.remove(+id);
+  @Delete(':movie_id/reviews/:review_id')
+  async deleteReview(@Param('review_id') reviewId: string, @Req() req: any) {
+    const token = req.cookies?.token;
+    if (!token) {
+      throw new UnauthorizedException('Token topilmadi');
+    }
+    return this.reviewsService.deleteReview(reviewId, token);
   }
 }

@@ -1,26 +1,84 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
+import { CreateAuthDto } from 'src/dtos/create-auth.dto';
+import { UpdateAuthDto } from 'src/dtos/update-auth.dto';
+import { PrismaService } from 'src/database/prisma.service';
+import bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { loginDto } from 'src/dtos/login-auth.dto';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
+  async create(createAuthDto: CreateAuthDto) {
+    const { username, email, password } = createAuthDto;
+    const existingUser = await this.prisma.user.findUnique({
+      where: { username },
+    });
+    if (existingUser) throw new ConflictException('User already exists');
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = await this.prisma.user.create({
+      data: {
+        username,
+        email,
+        passwordHash,
+      },
+      select: {
+        id: true,
+        username: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+    return {
+      success: true,
+      data: user,
+      message: 'User created You have successfully registered',
+    };
   }
+  async login(loginAuthDto: loginDto) {
+    const { email, password } = loginAuthDto;
+    const existingEmail = await this.prisma.user.findUnique({
+      where: { email },
+    });
+    if (!existingEmail) throw new ConflictException('User not found');
+    const isPassword = await bcrypt.compare(
+      password,
+      existingEmail.passwordHash!,
+    );
+    if (!isPassword) throw new BadRequestException('invalid password');
+    const token = this.jwtService.sign({ user_id: existingEmail.id });
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        username: true,
+        role: true,
+        subscriptions: {
+          select: {
+            id: true,
+            plan: {
+              select: {
+                name: true,
+                price: true,
+              },
+            },
+          },
+        },
+      },
+    });
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return {
+      token,
+      success: true,
+      data: user,
+      message: 'User created Login successfully',
+    };
   }
 }

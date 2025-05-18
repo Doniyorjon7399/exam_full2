@@ -14,11 +14,22 @@ export class TransformInterceptor implements NestInterceptor {
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
-      map((data) => {
-        return {
-          status: 'success',
-          data,
+      map((response) => {
+        const result: any = {
+          success: true,
         };
+
+        if (response?.message) {
+          result.message = response.message;
+        }
+
+        if (response?.data !== undefined && response?.data !== null) {
+          result.data = response.data;
+        } else {
+          result.data = response;
+        }
+
+        return result;
       }),
     );
   }

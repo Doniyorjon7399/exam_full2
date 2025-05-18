@@ -1,26 +1,67 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'src/database/prisma.service';
+import { AddReviewDto } from 'src/dtos/add-review.dto';
 
 @Injectable()
 export class CommentsService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
-  }
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
+  async addReview(movieId: string, dto: AddReviewDto, token: string) {
+    const decoded = this.jwtService.verify(token);
+    const userId = decoded.user_id;
+    const movie = await this.prisma.movie.findUnique({
+      where: { id: movieId },
+    });
 
-  findAll() {
-    return `This action returns all comments`;
-  }
+    if (!movie) {
+      throw new NotFoundException('Bunday kino topilmadi');
+    }
+    const review = await this.prisma.review.create({
+      data: {
+        movieId,
+        userId,
+        rating: dto.rating,
+        comment: dto.comment ?? '',
+      },
+      include: { user: { select: { id: true, username: true } } },
+    });
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
+    return {
+      success: true,
+      message: 'Sharh muvaffaqiyatli qoshildi',
+      data: review,
+    };
   }
+  async deleteReview(reviewId: string, token: string) {
+    const decoded = this.jwtService.verify(token);
+    const userId = decoded.user_id;
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
-  }
+    const existingReview = await this.prisma.review.findUnique({
+      where: { id: reviewId },
+    });
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+    if (!existingReview) {
+      throw new NotFoundException('Sharh topilmadi');
+    }
+
+    if (existingReview.userId !== userId) {
+      throw new ForbiddenException('Bu sharhni ochirish huquqiga ega emassiz');
+    }
+
+    await this.prisma.review.delete({
+      where: { id: reviewId },
+    });
+
+    return {
+      success: true,
+      message: 'Sharh muvaffaqiyatli ochirildi',
+    };
   }
 }

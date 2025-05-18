@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
+ enum Role {
   user
   admin
   superadmin
@@ -50,152 +50,153 @@ enum VideoQuality {
 
 model User {
   id           String   @id @default(uuid()) @db.Uuid
-  username     String   @unique
-  email        String   @unique
-  passwordHash String   
+  username     String   @unique @db.VarChar(50)
+  email        String   @unique @db.VarChar(100)
+  passwordHash String   @db.VarChar(255)
   role         Role     @default(user)
   avatarUrl    String?
   createdAt    DateTime @default(now()) 
+  @@map("users")
 
-  // profiles           Profile[]
-  // subscriptions      UserSubscription[]
-  // payments           Payment[]
-  // createdMovies      Movie[]      @relation("MovieCreator")
-  // favorites          Favorite[]
-  // reviews            Review[]
-  // watchHistory       WatchHistory[]
+  profiles           Profile[]
+  subscriptions      UserSubscription[]
+  createdMovies      Movie[]      @relation("MovieCreator")
+  favorites          Favorite[]
+  reviews            Review[]
+  watchHistory       WatchHistory[]
 }
 
 model Profile {
   id        String   @id @default(uuid())  @db.Uuid
-  userId    String
-  fullName  String   
-  phone     String
-  country   String
+  userId    String @db.Uuid @unique
+  fullName  String   @db.VarChar(100)
+  phone     String  @db.VarChar(20)
+  country   String  @db.VarChar(50)
   createdAt DateTime @default(now())
+    @@map("profiles")
 
-  // user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
 
 model SubscriptionPlan {
   id           String  @id @default(uuid())  @db.Uuid
-  name         String
+  name         String  @db.VarChar(50)
   price        Decimal
   durationDays Int     
   features     Json
   isActive     Boolean @default(true)
-
-  // subscriptions UserSubscription[]
+  @@map("subscriptionPlans")
+  subscriptions UserSubscription[]
 }
 
 model UserSubscription {
   id         String   @id @default(uuid())  @db.Uuid
-  userId     String
-  planId     String
+  userId     String @db.Uuid
+  planId     String @db.Uuid
   startDate  DateTime @default(now()) 
   endDate    DateTime
   status     SubscriptionStatus @default(pending_payment)
   autoRenew  Boolean  @default(false) 
   createdAt  DateTime @default(now())
-
-  // user User @relation(fields: [userId], references: [id])
-  // plan SubscriptionPlan @relation(fields: [planId], references: [id])
-  // payments Payment[]
+  @@map("userSubscriptions")
+  user User @relation(fields: [userId], references: [id])
+  plan SubscriptionPlan @relation(fields: [planId], references: [id])
+  payments Payment[]
 }
 
 model Payment {
   id                   String   @id @default(uuid())  @db.Uuid
-  userSubscriptionId   String  
+  userSubscriptionId   String  @db.Uuid 
   amount               Decimal
   paymentMethod        PaymentMethod 
   paymentDetails       Json    
   status               PaymentStatus
-  externalTransactionId String 
+  externalTransactionId String @db.VarChar(100)
   createdAt            DateTime @default(now()) 
-
-  // userSubscription UserSubscription @relation(fields: [userSubscriptionId], references: [id])
+  @@map("payments")
+  userSubscription UserSubscription @relation(fields: [userSubscriptionId], references: [id])
 }
 
 model Category {
   id          String @id @default(uuid())  @db.Uuid
-  name        String
-  slug        String @unique
+  name        String @db.VarChar(50)
+  slug        String @unique @db.VarChar(50)
   description String
 
-  // movieCategories MovieCategory[]
+  movieCategories MovieCategory[]
 }
 
 model Movie {
   id               String   @id @default(uuid())  @db.Uuid
-  title            String
-  slug             String   @unique
-  description      String
+  title            String   @db.VarChar(100)
+  slug             String?  @unique  @db.VarChar(100)
+  description      String 
   releaseYear      Int      
   durationMinutes  Int      
-  posterUrl        String  
+  posterUrl        String @db.VarChar(255) 
   rating           Decimal
   subscriptionType SubscriptionType @default(free) 
   viewCount        Int      @default(0) 
-  createdBy        String   
+  createdBy        String    @db.Uuid
   createdAt        DateTime @default(now()) 
-
-  // creator User @relation("MovieCreator", fields: [createdBy], references: [id])
-  // movieCategories MovieCategory[]
-  // files MovieFile[]
-  // favorites Favorite[]
-  // reviews Review[]
-  // watchHistory WatchHistory[]
+  @@map("movies")
+  creator User @relation("MovieCreator", fields: [createdBy], references: [id])
+  movieCategories MovieCategory[]
+  files MovieFile[]
+  favorites Favorite[]
+  reviews Review[]
+  watchHistory WatchHistory[]             
 }
 
 model MovieCategory {
   id         String @id @default(uuid())  @db.Uuid
-  movieId    String
-  categoryId String
-
-  // movie    Movie    @relation(fields: [movieId], references: [id])
-  // category Category @relation(fields: [categoryId], references: [id])
+  movieId    String @db.Uuid
+  categoryId String  @db.Uuid
+  @@map("movieCategories")
+  movie    Movie    @relation(fields: [movieId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
 }
 
 model MovieFile {
   id       String @id @default(uuid())  @db.Uuid
-  movieId  String
-  fileUrl  String   
+  movieId  String  @db.Uuid
+  fileUrl  String   @db.VarChar(255) 
   quality  VideoQuality
-  language String   @default("uz")
-
-  // movie Movie @relation(fields: [movieId], references: [id])
+  language String   @default("uz") @db.VarChar(20)
+  @@map("movieFiles")
+  movie Movie @relation(fields: [movieId], references: [id])
 }
 
 model Favorite {
   id        String   @id @default(uuid())  @db.Uuid
-  userId    String
-  movieId   String
+  userId    String  @db.Uuid
+  movieId   String   @db.Uuid
   createdAt DateTime @default(now()) 
-
-  // user  User  @relation(fields: [userId], references: [id])
-  // movie Movie @relation(fields: [movieId], references: [id])
+  @@map("favorites")
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
 }
 
 model Review {
   id        String   @id @default(uuid())  @db.Uuid
-  userId    String
-  movieId   String
+  userId    String   @db.Uuid
+  movieId   String   @db.Uuid
   rating    Int
   comment   String
   createdAt DateTime @default(now()) 
-
-  // user  User  @relation(fields: [userId], references: [id])
-  // movie Movie @relation(fields: [movieId], references: [id])
+  @@map("reviews")
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
 }
 
 model WatchHistory {
   id                String   @id @default(uuid())  @db.Uuid
-  userId            String
-  movieId           String
+  userId            String  @db.Uuid
+  movieId           String  @db.Uuid
   watchedDuration   Int     
   watchedPercentage Decimal 
   lastWatched       DateTime @default(now()) 
-
-  // user  User  @relation(fields: [userId], references: [id])
-  // movie Movie @relation(fields: [movieId], references: [id])
+  @@map("watchHistorys")
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
 }

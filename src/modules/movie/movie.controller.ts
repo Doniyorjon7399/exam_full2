@@ -1,34 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { MovieService } from './movie.service';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
-
-@Controller('movie')
+import { Request } from 'express';
+@Controller('movies')
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
-
-  @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.movieService.create(createMovieDto);
-  }
-
   @Get()
-  findAll() {
-    return this.movieService.findAll();
+  async getMovies(@Query() query: any) {
+    return this.movieService.getMovies(query);
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.movieService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
-    return this.movieService.update(+id, updateMovieDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.movieService.remove(+id);
+  @Get(':slug')
+  async getMovieBySlug(@Param('slug') slug: string, @Req() req: Request) {
+    const token = req.cookies?.token;
+    return this.movieService.getMovieBySlug(slug, token);
   }
 }

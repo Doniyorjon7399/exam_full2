@@ -1,26 +1,73 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserProfileDto } from './dto/create-user-profile.dto';
-import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'src/database/prisma.service';
+import { CreateProfileDto } from 'src/dtos/create-profile.dto';
 
 @Injectable()
 export class UserProfileService {
-  create(createUserProfileDto: CreateUserProfileDto) {
-    return 'This action adds a new userProfile';
+  constructor(
+    private prisma: PrismaService,
+    private jwt: JwtService,
+  ) {}
+  async createProfile(createProfile: CreateProfileDto, token) {
+    const { full_name, phone, country } = createProfile;
+    const { user_id } = await this.jwt.verifyAsync(token);
+    return this.prisma.profile.create({
+      data: {
+        fullName: full_name,
+        phone,
+        country,
+        user: {
+          connect: { id: user_id },
+        },
+      },
+    });
   }
+  async userProfile(token: string) {
+    const { user_id } = await this.jwt.verifyAsync(token);
 
-  findAll() {
-    return `This action returns all userProfile`;
+    const user = await this.prisma.profile.findUnique({
+      where: { userId: user_id },
+      select: {
+        id: true,
+        fullName: true,
+        phone: true,
+        country: true,
+        createdAt: true,
+        user: {
+          select: {
+            avatarUrl: true,
+          },
+        },
+      },
+    });
+
+    return user;
   }
+  async updateProfile(createProfile: CreateProfileDto, token: string) {
+    const { full_name, phone, country } = createProfile;
+    const { user_id } = await this.jwt.verifyAsync(token);
 
-  findOne(id: number) {
-    return `This action returns a #${id} userProfile`;
-  }
+    const existingProfile = await this.prisma.profile.findFirst({
+      where: { userId: user_id },
+    });
 
-  update(id: number, updateUserProfileDto: UpdateUserProfileDto) {
-    return `This action updates a #${id} userProfile`;
-  }
+    if (!existingProfile) {
+      throw new NotFoundException('Profile not found');
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} userProfile`;
+    const updatedProfile = await this.prisma.profile.update({
+      where: { id: existingProfile.id },
+      data: {
+        fullName: full_name,
+        phone,
+        country,
+      },
+    });
+
+    return {
+      message: 'Profile updated successfully',
+      data: updatedProfile,
+    };
   }
 }

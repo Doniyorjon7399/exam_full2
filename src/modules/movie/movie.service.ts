@@ -1,26 +1,109 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
-
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'src/database/prisma.service';
 @Injectable()
 export class MovieService {
-  create(createMovieDto: CreateMovieDto) {
-    return 'This action adds a new movie';
-  }
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
+  async getMovies(query: any) {
+    const { page = 1, limit = 20, category, search, subscription_type } = query;
 
-  findAll() {
-    return `This action returns all movie`;
-  }
+    const where: any = {};
 
-  findOne(id: number) {
-    return `This action returns a #${id} movie`;
-  }
+    if (search) {
+      where.title = { contains: search, mode: 'insensitive' };
+    }
 
-  update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
-  }
+    if (subscription_type) {
+      where.subscriptionType = subscription_type;
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} movie`;
+    if (category) {
+      where.movieCategories = {
+        some: {
+          category: {
+            name: { equals: category, mode: 'insensitive' },
+          },
+        },
+      };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [movies, total] = await Promise.all([
+      this.prisma.movie.findMany({
+        where,
+        skip: +skip,
+        take: +limit,
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          posterUrl: true,
+          releaseYear: true,
+          rating: true,
+          subscriptionType: true,
+          movieCategories: {
+            select: {
+              category: { select: { name: true } },
+            },
+          },
+        },
+      }),
+      this.prisma.movie.count({ where }),
+    ]);
+
+    const result = movies.map((m) => ({
+      ...m,
+      categories: m.movieCategories.map((mc) => mc.category.name),
+    }));
+
+    return {
+      success: true,
+      data: {
+        movies: result,
+        pagination: {
+          total,
+          page: +page,
+          limit: +limit,
+          pages: Math.ceil(total / limit),
+        },
+      },
+    };
+  }
+  async getMovieBySlug(slug: string, token?: string) {
+    let userId: string | null = null;
+
+    if (token) {
+      try {
+        const decoded = this.jwtService.verify(token);
+        userId = decoded.id;
+      } catch {
+        throw new UnauthorizedException('Token noto‘g‘ri yoki muddati tugagan');
+      }
+    }
+
+    const movie = await this.prisma.movie.findUnique({
+      where: { slug },
+      include: {
+        movieCategories: { include: { category: true } },
+        files: true,
+        reviews: true,
+        favorites: userId ? { where: { userId } } : false,
+      },
+    });
+
+    if (!movie) throw new NotFoundException('Movie topilmadi');
+
+    return {
+      success: true,
+      data: movie,
+    };
   }
 }

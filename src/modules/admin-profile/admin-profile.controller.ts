@@ -1,34 +1,65 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  Req,
+  UnauthorizedException,
+  ForbiddenException,
+  Put,
+} from '@nestjs/common';
 import { AdminProfileService } from './admin-profile.service';
-import { CreateAdminProfileDto } from './dto/create-admin-profile.dto';
-import { UpdateAdminProfileDto } from './dto/update-admin-profile.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from 'src/config/multer.config';
+import { CreateMovieDto } from 'src/dtos/create-movie.dto';
+import { UpdateMovieDto } from 'src/dtos/update-movie.dto';
+import { UpdateRoleDto } from 'src/dtos/addorole.dto';
 
-@Controller('admin-profile')
+@Controller('admin')
 export class AdminProfileController {
   constructor(private readonly adminProfileService: AdminProfileService) {}
-
-  @Post()
-  create(@Body() createAdminProfileDto: CreateAdminProfileDto) {
-    return this.adminProfileService.create(createAdminProfileDto);
+  @Get('movies')
+  async getAllMovies(@Req() req: Request) {
+    return this.adminProfileService.getAllMovies(req);
   }
-
-  @Get()
-  findAll() {
-    return this.adminProfileService.findAll();
+  @Post('movies')
+  @UseInterceptors(FileInterceptor('poster', multerConfig))
+  async createMovie(
+    @Body() dto: CreateMovieDto,
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req: Request,
+  ) {
+    return this.adminProfileService.createMovie(dto, file, req);
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.adminProfileService.findOne(+id);
+  @Put('movies/:movie_id')
+  async updateMovie(
+    @Param('movie_id') movieId: string,
+    @Body() dto: UpdateMovieDto,
+    @Req() req: Request,
+  ) {
+    return this.adminProfileService.updateMovie(movieId, dto, req);
   }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminProfileDto: UpdateAdminProfileDto) {
-    return this.adminProfileService.update(+id, updateAdminProfileDto);
+  @Delete('movies/:movie_id')
+  async deleteMovie(@Param('movie_id') movieId: string, @Req() req: Request) {
+    return this.adminProfileService.deleteMovie(movieId, req);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.adminProfileService.remove(+id);
+  @Post('movies/:movie_id/files')
+  @UseInterceptors(FileInterceptor('file', multerConfig))
+  async uploadMovieFile(
+    @Param('movie_id') movieId: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: { quality: string; language: string },
+    @Req() req: Request,
+  ) {
+    return this.adminProfileService.uploadMovieFile(movieId, file, body, req);
+  }
+  @Patch('promote')
+  async promoteToAdmin(@Body() dto: UpdateRoleDto) {
+    return this.adminProfileService.promoteToAdmin(dto.userId);
   }
 }
