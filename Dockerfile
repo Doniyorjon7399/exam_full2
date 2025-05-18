@@ -7,8 +7,8 @@ RUN yarn install --production
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
-EXPOSE 3000
+EXPOSE 4000
 
-CMD ["node", "dist/main.js"]
+CMD ["yarn", "start:prod"]
