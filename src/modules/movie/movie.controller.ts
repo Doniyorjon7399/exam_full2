@@ -15,9 +15,17 @@ import { Request } from 'express';
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
   @Get()
-  async getMovies(@Query() query: any) {
-    return this.movieService.getMovies(query);
+  @Get()
+  async getMovies(@Query('search') search?: string) {
+    const movies = await this.movieService.findMovies(search);
+    return {
+      success: true,
+      data: {
+        movies,
+      },
+    };
   }
+
   @Get(':slug')
   async getMovieBySlug(@Param('slug') slug: string, @Req() req: Request) {
     const token = req.cookies?.token;

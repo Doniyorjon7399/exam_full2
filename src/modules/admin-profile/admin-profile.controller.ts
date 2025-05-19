@@ -16,9 +16,9 @@ import {
 import { AdminProfileService } from './admin-profile.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from 'src/config/multer.config';
-import { CreateMovieDto } from 'src/dtos/create-movie.dto';
 import { UpdateMovieDto } from 'src/dtos/update-movie.dto';
 import { UpdateRoleDto } from 'src/dtos/addorole.dto';
+import { CreateMovieDto } from 'src/dtos/createMovie.dto';
 
 @Controller('admin')
 export class AdminProfileController {

@@ -3,80 +3,55 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Prisma, SubscriptionType } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/database/prisma.service';
+interface FindMoviesParams {
+  page: number;
+  limit: number;
+  category?: string;
+  search?: string;
+  subscription_type?: string;
+}
 @Injectable()
 export class MovieService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
   ) {}
-  async getMovies(query: any) {
-    const { page = 1, limit = 20, category, search, subscription_type } = query;
-
+  async findMovies(search?: string) {
     const where: any = {};
 
     if (search) {
-      where.title = { contains: search, mode: 'insensitive' };
-    }
-
-    if (subscription_type) {
-      where.subscriptionType = subscription_type;
-    }
-
-    if (category) {
-      where.movieCategories = {
-        some: {
-          category: {
-            name: { equals: category, mode: 'insensitive' },
-          },
-        },
+      where.title = {
+        contains: search,
+        mode: 'insensitive',
       };
     }
 
-    const skip = (page - 1) * limit;
-
-    const [movies, total] = await Promise.all([
-      this.prisma.movie.findMany({
-        where,
-        skip: +skip,
-        take: +limit,
-        select: {
-          id: true,
-          title: true,
-          slug: true,
-          posterUrl: true,
-          releaseYear: true,
-          rating: true,
-          subscriptionType: true,
-          movieCategories: {
-            select: {
-              category: { select: { name: true } },
-            },
+    const movies = await this.prisma.movie.findMany({
+      where,
+      include: {
+        movieCategories: {
+          include: {
+            category: true,
           },
         },
-      }),
-      this.prisma.movie.count({ where }),
-    ]);
-
-    const result = movies.map((m) => ({
-      ...m,
-      categories: m.movieCategories.map((mc) => mc.category.name),
-    }));
-
-    return {
-      success: true,
-      data: {
-        movies: result,
-        pagination: {
-          total,
-          page: +page,
-          limit: +limit,
-          pages: Math.ceil(total / limit),
-        },
       },
-    };
+    });
+
+    return movies.map((movie) => ({
+      id: movie.id,
+      title: movie.title,
+      slug: movie.slug,
+      poster_url: movie.posterUrl,
+      release_year: movie.releaseYear,
+      rating: movie.rating,
+      subscription_type: movie.subscriptionType,
+      categories: movie.movieCategories.map((mc) => mc.category.name),
+    }));
   }
+
   async getMovieBySlug(slug: string, token?: string) {
     let userId: string | null = null;
 
@@ -85,10 +60,10 @@ export class MovieService {
         const decoded = this.jwtService.verify(token);
         userId = decoded.id;
       } catch {
-        throw new UnauthorizedException('Token noto‘g‘ri yoki muddati tugagan');
+        throw new UnauthorizedException('Token notogri yoki muddati tugagan');
       }
     }
-
+    console.log(slug);
     const movie = await this.prisma.movie.findUnique({
       where: { slug },
       include: {

@@ -9,6 +9,8 @@ COPY . .
 
 RUN yarn build
 
+COPY docker-entrypoint.sh .
+
 EXPOSE 4000
 
-CMD ["yarn", "start:prod"]
+ENTRYPOINT ["/bin/sh", "./docker-entrypoint.sh"]

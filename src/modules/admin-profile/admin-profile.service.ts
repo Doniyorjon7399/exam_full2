@@ -7,6 +7,8 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { VideoQuality } from '@prisma/client';
+import { UUID } from 'crypto';
+import { exists } from 'fs';
 import { PrismaService } from 'src/database/prisma.service';
 @Injectable()
 export class AdminProfileService {
@@ -64,6 +66,14 @@ export class AdminProfileService {
     };
   }
   async createMovie(dto: any, file: any, req: any) {
+    const categoryIds = JSON.parse(dto.category_ids);
+    let categoryId: UUID;
+    if (Array.isArray(categoryIds)) {
+      categoryId = categoryIds[0];
+    } else {
+      categoryId = categoryIds;
+    }
+
     const posterFilename = file.filename;
 
     const token = req.cookies?.token;
@@ -73,11 +83,17 @@ export class AdminProfileService {
     if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
     if (user.role !== 'admin' && user.role !== 'superadmin')
       throw new ForbiddenException('Faqat adminlar uchun ruxsat');
-
+    const existsMovie = await this.prisma.movie.findFirst({
+      where: {
+        title: dto.title,
+      },
+    });
+    if (existsMovie) throw new BadRequestException('film allaqachon qoshilgan');
     const movie = await this.prisma.movie.create({
       data: {
         title: dto.title,
         description: dto.description,
+        slug: dto.title,
         releaseYear: Number(dto.release_year),
         durationMinutes: Number(dto.duration_minutes),
         subscriptionType: dto.subscription_type.trim(),
@@ -91,7 +107,19 @@ export class AdminProfileService {
         createdAt: true,
       },
     });
-
+    const existsCategory = await this.prisma.category.findFirst({
+      where: {
+        id: categoryId,
+      },
+    });
+    if (!existsCategory)
+      throw new BadRequestException('siz categoriy id ni notogri kiritdingiz');
+    await this.prisma.movieCategory.create({
+      data: {
+        movieId: movie.id,
+        categoryId: categoryId,
+      },
+    });
     return {
       success: true,
       message: 'Yangi kino muvaffaqiyatli qoshildi',
@@ -106,7 +134,10 @@ export class AdminProfileService {
     if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
     if (user.role !== 'admin' && user.role !== 'superadmin')
       throw new ForbiddenException('Faqat adminlar uchun ruxsat');
-
+    const existsMovie = await this.prisma.movie.findFirst({
+      where: { id: movieId },
+    });
+    if (!existsMovie) throw new BadRequestException('not found movies id');
     const updatedMovie = await this.prisma.movie.update({
       where: { id: movieId },
       data: dto,
@@ -131,6 +162,10 @@ export class AdminProfileService {
     if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
     if (user.role !== 'admin' && user.role !== 'superadmin')
       throw new ForbiddenException('Faqat adminlar uchun ruxsat');
+    const existsMovie = await this.prisma.movie.findFirst({
+      where: { id: movieId },
+    });
+    if (!existsMovie) throw new BadRequestException('not found movies id');
 
     await this.prisma.movie.delete({ where: { id: movieId } });
 

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateProfileDto } from 'src/dtos/create-profile.dto';
@@ -12,6 +16,12 @@ export class UserProfileService {
   async createProfile(createProfile: CreateProfileDto, token) {
     const { full_name, phone, country } = createProfile;
     const { user_id } = await this.jwt.verifyAsync(token);
+    const existingProfile = await this.prisma.profile.findFirst({
+      where: { userId: user_id },
+    });
+
+    if (existingProfile)
+      throw new BadRequestException('Profile with  already exists');
     return this.prisma.profile.create({
       data: {
         fullName: full_name,

@@ -154,7 +154,7 @@ model MovieCategory {
   id         String @id @default(uuid())  @db.Uuid
   movieId    String @db.Uuid
   categoryId String  @db.Uuid
-  @@map("movieCategories")
+  @@map("movieCategory")
   movie    Movie    @relation(fields: [movieId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
 }
