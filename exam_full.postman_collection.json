@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "    {\r\n          \"username\": \"alijon\",\r\n          \"email\": \"alijon@example.com\",\r\n          \"password\": \"12345678\"\r\n        }",
+					"raw": "   {\r\n  \"username\": \"shahnoza\",\r\n  \"email\": \"shahnoza@example.com\",\r\n  \"password\": \"myPass456\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n          \"email\": \"alijon@example.com\",\r\n          \"password\": \"12345678\"\r\n        }",
+					"raw": "   {\r\n     \"email\": \"shahnoza@example.com\",\r\n  \"password\": \"myPass456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,7 +95,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\n       \"full_name\": \"Aliyev Valijon\",\n       \"phone\": \"+998901234567\",\n       \"country\": \"Uzbekistan\"\n     }",
+					"raw": "{\n       \"full_name\": \"Aliyev Valddeeeijon\",\n       \"phone\": \"+998901454569\",\n       \"country\": \"Uzbekidedestan\"\n     }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,7 +124,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\n       \"full_name\": \"Aliyev Valijonjnjvfdvv\",\n       \"phone\": \"+998901234569\",\n       \"country\": \"Uzbekicdsckbkstan\"\n     }",
+					"raw": " {\n       \"full_name\": \"Aliyev Vavvlijonjnjvfdvv\",\n       \"phone\": \"+998901237569\",\n       \"country\": \"Uzbekicdsckbksn\"\n     }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -148,9 +148,21 @@
 		},
 		{
 			"name": "profil/get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:4000/api/profile",
 					"protocol": "http",
@@ -167,13 +179,72 @@
 			"response": []
 		},
 		{
+			"name": "Subscriptions/plans/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Premium\",\n  \"price\": 49.99    ,\n  \"durationDays\": 30,\n  \"features\":[\"HD sifatli kinolar\", \"Reklamasiz\", \"Yangi kinolar\"],\n  \"isActive\": true\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/subscription/plans/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"subscription",
+						"plans",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscriptions/plans",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/subscription/plans",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"subscription",
+						"plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Subscriptions/purchase",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n       \"plan_id\": \"550e8400-e29b-41d4-a716-446655440002\",\n       \"payment_method\": \"card\",\n       \"auto_renew\": true,\n       \"payment_details\": {\n         \"card_number\": \"4242XXXXXXXX4242\",\n         \"expiry\": \"04/26\",\n         \"card_holder\": \"ALIJON VALIYEV\"\n       }\n     }",
+					"raw": "{\n       \"plan_id\": \"c0b7f5f4-a76f-47c8-84e4-224b252bf364\",\n       \"payment_method\": \"card\",\n       \"auto_renew\": true,\n       \"payment_details\": {\n         \"card_number\": \"4242XXXXXXXX4242\",\n         \"expiry\": \"04/26\",\n         \"card_holder\": \"ALIJON VALIYEV\"\n       }\n     }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -197,12 +268,12 @@
 			"response": []
 		},
 		{
-			"name": "Subscriptions/plans",
+			"name": "movies/slug",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/subscription/plans",
+					"raw": "http://localhost:4000/api/movies/Yangi Fil",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -210,28 +281,8 @@
 					"port": "4000",
 					"path": [
 						"api",
-						"subscription",
-						"plans"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "movies/slug",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:4000/api/movies:slug",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"api",
-						"movies:slug"
+						"movies",
+						"Yangi Fil"
 					]
 				}
 			},
@@ -243,7 +294,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/movies?page=1&limit=20&category=action&search=qasoskorlar&subscription_type=free",
+					"raw": "http://localhost:4000/api/movies?page=1&limit=20&category=Action&search=Yangi Film&subscription_type=free",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -264,16 +315,45 @@
 						},
 						{
 							"key": "category",
-							"value": "action"
+							"value": "Action"
 						},
 						{
 							"key": "search",
-							"value": "qasoskorlar"
+							"value": "Yangi Film"
 						},
 						{
 							"key": "subscription_type",
 							"value": "free"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "favorites/post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"movie_id\": \"a5be77dc-8f51-4d1a-8d3d-020b976342eb\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/favorites",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"favorites"
 					]
 				}
 			},
@@ -300,45 +380,16 @@
 			"response": []
 		},
 		{
-			"name": "favorites/post",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"movie_id\": \"550e8400-e29b-41d4-a716-446655440021\" }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:4000/api/favorites",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "4000",
-					"path": [
-						"api",
-						"favorites"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "New Request",
+			"name": "favorites/delete",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"movie_id\": \"550e8400-e29b-41d4-a716-446655440021\" }"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/favorites/550e8400-e29b-41d4-a716-446655440021",
+					"raw": "http://localhost:4000/api/favorites/a5be77dc-8f51-4d1a-8d3d-020b976342eb",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -347,7 +398,7 @@
 					"path": [
 						"api",
 						"favorites",
-						"550e8400-e29b-41d4-a716-446655440021"
+						"a5be77dc-8f51-4d1a-8d3d-020b976342eb"
 					]
 				}
 			},
@@ -368,16 +419,19 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/movies/eb595fbd-b5bf-43cf-b297-cdcf67f90a80/reviews",
+					"raw": "http://34.136.217.244:4000/api/movies/0cc0267f-db0d-43df-ac37-07858ef7a916/reviews",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"136",
+						"217",
+						"244"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"movies",
-						"eb595fbd-b5bf-43cf-b297-cdcf67f90a80",
+						"0cc0267f-db0d-43df-ac37-07858ef7a916",
 						"reviews"
 					]
 				}
@@ -394,18 +448,21 @@
 					"raw": " {\n       \"rating\": 5,\n       \"comment\": \"Juda ajoyib film, ko'rishni tavsiya etaman!\"\n     }"
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/movies/550e8400-e29b-41d4-a716-446655440021/reviews/550e8400-e29b-41d4-a716-446655440021",
+					"raw": "http://34.136.217.244:4000/api/movies/0cc0267f-db0d-43df-ac37-07858ef7a916/reviews/2b4a78a0-ba15-449d-951c-65148a0ed693",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"136",
+						"217",
+						"244"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"movies",
-						"550e8400-e29b-41d4-a716-446655440021",
+						"0cc0267f-db0d-43df-ac37-07858ef7a916",
 						"reviews",
-						"550e8400-e29b-41d4-a716-446655440021"
+						"2b4a78a0-ba15-449d-951c-65148a0ed693"
 					]
 				}
 			},
@@ -440,32 +497,21 @@
 			"response": []
 		},
 		{
-			"name": "Admin panel/movies/create",
+			"name": "Admin pane/create/category",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/home/doniyor/1080p.mp4"
-						},
-						{
-							"key": "quality",
-							"value": "720p",
-							"type": "text"
-						},
-						{
-							"key": "language",
-							"value": "uz",
-							"type": "text"
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Action\",\n  \"slug\": \"action\",\n  \"description\": \"Sarguzasht va jangari sahnalarga boy filmlar toifasi\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
+					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/f0d586af-43aa-467d-90df-2114c61034dc/files",
+					"raw": "http://localhost:4000/api/admin/movies/category",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -475,7 +521,110 @@
 						"api",
 						"admin",
 						"movies",
-						"f0d586af-43aa-467d-90df-2114c61034dc",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Yangi Fil",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Film ta'rifi",
+							"type": "text"
+						},
+						{
+							"key": "release_year",
+							"value": "2024",
+							"type": "text"
+						},
+						{
+							"key": "duration_minutes",
+							"value": "120",
+							"type": "text"
+						},
+						{
+							"key": "subscription_type",
+							"value": "premium",
+							"type": "text"
+						},
+						{
+							"key": "category_ids",
+							"value": "[\"03e30d65-70c3-4c95-a3dd-cdfa39fb2508\"]",
+							"type": "text"
+						},
+						{
+							"key": "poster",
+							"type": "file",
+							"src": "/home/doniyor/Pictures/19.xcv_.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin panel/movies/addFile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "quality",
+							"value": "720p",
+							"type": "text"
+						},
+						{
+							"key": "language",
+							"value": "uz",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/doniyor/1080p.mp4"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/admin/movies/a5be77dc-8f51-4d1a-8d3d-020b976342eb/files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"admin",
+						"movies",
+						"a5be77dc-8f51-4d1a-8d3d-020b976342eb",
 						"files"
 					]
 				}
@@ -483,7 +632,7 @@
 			"response": []
 		},
 		{
-			"name": "Admin panel/movies/all",
+			"name": "Admin panel/movies/update",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -508,7 +657,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/904c4dda-4b0e-4f14-84de-792218ab7ea8",
+					"raw": "http://localhost:4000/api/admin/movies/a5be77dc-8f51-4d1a-8d3d-020b976342eb",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -518,7 +667,7 @@
 						"api",
 						"admin",
 						"movies",
-						"904c4dda-4b0e-4f14-84de-792218ab7ea8"
+						"a5be77dc-8f51-4d1a-8d3d-020b976342eb"
 					]
 				}
 			},
@@ -550,7 +699,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/904c4dda-4b0e-4f14-84de-792218ab7ea8",
+					"raw": "http://localhost:4000/api/admin/movies/4ed8a889-f087-4a1f-b89e-de7974ea3a74",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -560,17 +709,9 @@
 						"api",
 						"admin",
 						"movies",
-						"904c4dda-4b0e-4f14-84de-792218ab7ea8"
+						"4ed8a889-f087-4a1f-b89e-de7974ea3a74"
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Admin panel/movies/addFile",
-			"request": {
-				"method": "GET",
-				"header": []
 			},
 			"response": []
 		},
@@ -581,7 +722,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userId\": \"cca7ce23-113d-4255-a2c9-78edd92984bd\"\n}",
+					"raw": "{\n  \"userId\": \"25c0db65-1002-4da5-90e7-222ff719b9de\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
