@@ -66,6 +66,7 @@ export class AdminProfileService {
     };
   }
   async createMovie(dto: any, file: any, req: any) {
+    if (!file) throw new BadRequestException('Fayl yuklanmadi');
     const categoryIds = JSON.parse(dto.category_ids);
     let categoryId: UUID;
     if (Array.isArray(categoryIds)) {

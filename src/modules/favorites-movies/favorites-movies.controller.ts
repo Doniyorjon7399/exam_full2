@@ -20,7 +20,6 @@ export class FavoritesMoviesController {
   @Post()
   async addFavorite(@Body() dto: AddFavoriteDto, @Req() req: any) {
     const token = req.cookies?.token;
-    console.log(dto);
     return this.favoritesMoviesService.addFavorite(dto.movie_id, token);
   }
   @Get()
