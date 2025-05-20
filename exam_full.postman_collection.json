@@ -22,10 +22,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/auth/register",
+					"raw": "http://34.173.20.60:4000/api/auth/register",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -44,7 +47,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n     \"email\": \"shahnoza@example.com\",\r\n  \"password\": \"myPass456\"\r\n}",
+					"raw": "   {\r\n     \"email\": \"exam@gmail.com\",\r\n  \"password\": \"aziz343534\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,10 +55,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/auth/login",
+					"raw": "http://34.173.20.60:4000/api/auth/login",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -73,10 +79,13 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/auth/logout",
+					"raw": "http://34.173.20.60:4000/api/auth/logout",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -103,10 +112,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/profile",
+					"raw": "http://34.173.20.60:4000/api/profile",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -132,10 +144,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/profile",
+					"raw": "http://34.173.20.60:4000/api/profile",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -164,10 +179,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/profile",
+					"raw": "http://34.173.20.60:4000/api/profile",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -179,7 +197,7 @@
 			"response": []
 		},
 		{
-			"name": "Subscriptions/plans/create",
+			"name": "**Subscriptions/plans/create",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -193,10 +211,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/subscription/plans/create",
+					"raw": "http://34.173.20.60:4000/api/subscription/plans/create",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -222,10 +243,13 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/subscription/plans",
+					"raw": "http://34.173.20.60:4000/api/subscription/plans",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -244,7 +268,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n       \"plan_id\": \"c0b7f5f4-a76f-47c8-84e4-224b252bf364\",\n       \"payment_method\": \"card\",\n       \"auto_renew\": true,\n       \"payment_details\": {\n         \"card_number\": \"4242XXXXXXXX4242\",\n         \"expiry\": \"04/26\",\n         \"card_holder\": \"ALIJON VALIYEV\"\n       }\n     }",
+					"raw": "{\n       \"plan_id\": \"8404aaea-eaf3-4438-b6b9-c0b69a5a7821\",\n       \"payment_method\": \"card\",\n       \"auto_renew\": true,\n       \"payment_details\": {\n         \"card_number\": \"4242XXXXXXXX4242\",\n         \"expiry\": \"04/26\",\n         \"card_holder\": \"ALIJON VALIYEV\"\n       }\n     }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -252,10 +276,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/subscription/purchase",
+					"raw": "http://34.173.20.60:4000/api/subscription/purchase",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -273,10 +300,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/movies/Yangi Fil",
+					"raw": "http://34.173.20.60:4000/api/movies/Yangi Fil",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -294,10 +324,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/movies?page=1&limit=20&category=Action&search=Yangi Film&subscription_type=free",
+					"raw": "http://34.173.20.60:4000/api/movies?page=1&limit=20&category=Action&search=Yangi Film&subscription_type=free",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -337,7 +370,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"movie_id\": \"a5be77dc-8f51-4d1a-8d3d-020b976342eb\" }",
+					"raw": "{\"movie_id\": \"78125a4c-15f9-4e0b-b269-6c6d6679c108\" }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -345,10 +378,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/favorites",
+					"raw": "http://34.173.20.60:4000/api/favorites",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -365,10 +401,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/favorites",
+					"raw": "http://34.173.20.60:4000/api/favorites",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -389,23 +428,26 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/favorites/a5be77dc-8f51-4d1a-8d3d-020b976342eb",
+					"raw": "http://34.173.20.60:4000/api/favorites/78125a4c-15f9-4e0b-b269-6c6d6679c108",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"favorites",
-						"a5be77dc-8f51-4d1a-8d3d-020b976342eb"
+						"78125a4c-15f9-4e0b-b269-6c6d6679c108"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "reviews",
+			"name": "reviews/add",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -419,19 +461,19 @@
 					}
 				},
 				"url": {
-					"raw": "http://34.136.217.244:4000/api/movies/0cc0267f-db0d-43df-ac37-07858ef7a916/reviews",
+					"raw": "http://34.173.20.60:4000/api/movies/78125a4c-15f9-4e0b-b269-6c6d6679c108/reviews",
 					"protocol": "http",
 					"host": [
 						"34",
-						"136",
-						"217",
-						"244"
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"movies",
-						"0cc0267f-db0d-43df-ac37-07858ef7a916",
+						"78125a4c-15f9-4e0b-b269-6c6d6679c108",
 						"reviews"
 					]
 				}
@@ -448,21 +490,21 @@
 					"raw": " {\n       \"rating\": 5,\n       \"comment\": \"Juda ajoyib film, ko'rishni tavsiya etaman!\"\n     }"
 				},
 				"url": {
-					"raw": "http://34.136.217.244:4000/api/movies/0cc0267f-db0d-43df-ac37-07858ef7a916/reviews/2b4a78a0-ba15-449d-951c-65148a0ed693",
+					"raw": "http://34.173.20.60:4000/api/movies/78125a4c-15f9-4e0b-b269-6c6d6679c108/reviews/604b36f3-49f9-47c4-8ea5-053741c89d8b",
 					"protocol": "http",
 					"host": [
 						"34",
-						"136",
-						"217",
-						"244"
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"movies",
-						"0cc0267f-db0d-43df-ac37-07858ef7a916",
+						"78125a4c-15f9-4e0b-b269-6c6d6679c108",
 						"reviews",
-						"2b4a78a0-ba15-449d-951c-65148a0ed693"
+						"604b36f3-49f9-47c4-8ea5-053741c89d8b"
 					]
 				}
 			},
@@ -481,10 +523,13 @@
 					"raw": "{\"movie_id\": \"550e8400-e29b-41d4-a716-446655440021\" }"
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies",
+					"raw": "http://34.173.20.60:4000/api/admin/movies",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -511,10 +556,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/category",
+					"raw": "http://34.173.20.60:4000/api/admin/movies/category",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -537,7 +585,7 @@
 					"formdata": [
 						{
 							"key": "title",
-							"value": "Yangi Fil",
+							"value": "Yangi Film",
 							"type": "text"
 						},
 						{
@@ -562,21 +610,24 @@
 						},
 						{
 							"key": "category_ids",
-							"value": "[\"03e30d65-70c3-4c95-a3dd-cdfa39fb2508\"]",
+							"value": "[\"8381a39c-ec49-466f-a39f-0528dfa55a22\"]",
 							"type": "text"
 						},
 						{
 							"key": "poster",
 							"type": "file",
-							"src": "/home/doniyor/Pictures/19.xcv_.jpg"
+							"src": "/home/doniyor/Pictures/Screenshots/Screenshot from 2025-03-14 13-42-45.png"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies",
+					"raw": "http://34.173.20.60:4000/api/admin/movies",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
@@ -614,17 +665,20 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/a5be77dc-8f51-4d1a-8d3d-020b976342eb/files",
+					"raw": "http://34.173.20.60:4000/api/admin/movies/78125a4c-15f9-4e0b-b269-6c6d6679c108/files",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"admin",
 						"movies",
-						"a5be77dc-8f51-4d1a-8d3d-020b976342eb",
+						"78125a4c-15f9-4e0b-b269-6c6d6679c108",
 						"files"
 					]
 				}
@@ -657,17 +711,20 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/a5be77dc-8f51-4d1a-8d3d-020b976342eb",
+					"raw": "http://34.173.20.60:4000/api/admin/movies/78125a4c-15f9-4e0b-b269-6c6d6679c108",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"admin",
 						"movies",
-						"a5be77dc-8f51-4d1a-8d3d-020b976342eb"
+						"78125a4c-15f9-4e0b-b269-6c6d6679c108"
 					]
 				}
 			},
@@ -699,17 +756,20 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/movies/4ed8a889-f087-4a1f-b89e-de7974ea3a74",
+					"raw": "http://34.173.20.60:4000/api/admin/movies/78125a4c-15f9-4e0b-b269-6c6d6679c108",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [
 						"api",
 						"admin",
 						"movies",
-						"4ed8a889-f087-4a1f-b89e-de7974ea3a74"
+						"78125a4c-15f9-4e0b-b269-6c6d6679c108"
 					]
 				}
 			},
@@ -730,10 +790,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/admin/promote",
+					"raw": "http://34.173.20.60:4000/api/admin/promote",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"34",
+						"173",
+						"20",
+						"60"
 					],
 					"port": "4000",
 					"path": [

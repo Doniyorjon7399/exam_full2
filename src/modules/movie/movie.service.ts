@@ -63,7 +63,7 @@ export class MovieService {
         throw new UnauthorizedException('Token notogri yoki muddati tugagan');
       }
     }
-    console.log(slug);
+    
     const movie = await this.prisma.movie.findUnique({
       where: { slug },
       include: {
