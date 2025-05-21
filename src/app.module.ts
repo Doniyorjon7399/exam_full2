@@ -14,6 +14,7 @@ import { AdminProfileModule } from './modules/admin-profile/admin-profile.module
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthGuard } from './common/guards/auth.guard';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { RoleGuard } from './common/guards/role.guard';
 @Module({
   imports: [
     PrismaModule,

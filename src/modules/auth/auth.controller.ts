@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from 'src/dtos/create-auth.dto';
-import { UpdateAuthDto } from 'src/dtos/update-auth.dto';
 import isPublic from 'src/common/decorators/is_public.decarator';
 import { loginDto } from 'src/dtos/login-auth.dto';
 import { Response } from 'express';

@@ -16,14 +16,7 @@ export class AdminProfileService {
     private prisma: PrismaService,
     private jwt: JwtService,
   ) {}
-  async getAllMovies(req: any) {
-    const token = req.cookies?.token;
-    const { user_id } = await this.jwt.verifyAsync(token);
-
-    const user = await this.prisma.user.findUnique({ where: { id: user_id } });
-    if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
-    if (user.role !== 'admin' && user.role !== 'superadmin')
-      throw new ForbiddenException('Faqat adminlar uchun ruxsat');
+  async getAllMovies() {
     const movies = await this.prisma.movie.findMany({
       select: {
         id: true,
@@ -82,8 +75,6 @@ export class AdminProfileService {
 
     const user = await this.prisma.user.findUnique({ where: { id: user_id } });
     if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
-    if (user.role !== 'admin' && user.role !== 'superadmin')
-      throw new ForbiddenException('Faqat adminlar uchun ruxsat');
     const existsMovie = await this.prisma.movie.findFirst({
       where: {
         title: dto.title,
@@ -127,14 +118,7 @@ export class AdminProfileService {
       data: movie,
     };
   }
-  async updateMovie(movieId: string, dto: any, req: any) {
-    const token = req.cookies?.token;
-    const { user_id } = await this.jwt.verifyAsync(token);
-
-    const user = await this.prisma.user.findUnique({ where: { id: user_id } });
-    if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
-    if (user.role !== 'admin' && user.role !== 'superadmin')
-      throw new ForbiddenException('Faqat adminlar uchun ruxsat');
+  async updateMovie(movieId: string, dto: any) {
     const existsMovie = await this.prisma.movie.findFirst({
       where: { id: movieId },
     });
@@ -155,14 +139,7 @@ export class AdminProfileService {
       data: updatedMovie,
     };
   }
-  async deleteMovie(movieId: string, req: any) {
-    const token = req.cookies?.token;
-    const { user_id } = await this.jwt.verifyAsync(token);
-
-    const user = await this.prisma.user.findUnique({ where: { id: user_id } });
-    if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
-    if (user.role !== 'admin' && user.role !== 'superadmin')
-      throw new ForbiddenException('Faqat adminlar uchun ruxsat');
+  async deleteMovie(movieId: string) {
     const existsMovie = await this.prisma.movie.findFirst({
       where: { id: movieId },
     });
@@ -179,7 +156,6 @@ export class AdminProfileService {
     movieId: string,
     file: Express.Multer.File,
     body: { quality: string; language: string },
-    req: any,
   ) {
     const qualityMap: Record<string, VideoQuality> = {
       '240p': 'P240',
@@ -200,13 +176,7 @@ export class AdminProfileService {
     const quality = mappedQuality as VideoQuality;
 
     if (!file) throw new BadRequestException('Fayl yuklanmadi');
-    const token = req.cookies?.token;
-    const { user_id } = await this.jwt.verifyAsync(token);
 
-    const user = await this.prisma.user.findUnique({ where: { id: user_id } });
-    if (!user) throw new UnauthorizedException('Foydalanuvchi aniqlanmadi');
-    if (user.role !== 'admin' && user.role !== 'superadmin')
-      throw new ForbiddenException('Faqat adminlar uchun ruxsat');
     const movie = await this.prisma.movie.findUnique({
       where: { id: movieId },
     });
