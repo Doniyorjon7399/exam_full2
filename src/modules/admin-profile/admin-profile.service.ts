@@ -10,6 +10,7 @@ import { VideoQuality } from '@prisma/client';
 import { UUID } from 'crypto';
 import { exists } from 'fs';
 import { PrismaService } from 'src/database/prisma.service';
+import { qualityMap } from 'src/common/types/vidio-quelity';
 @Injectable()
 export class AdminProfileService {
   constructor(
@@ -157,15 +158,6 @@ export class AdminProfileService {
     file: Express.Multer.File,
     body: { quality: string; language: string },
   ) {
-    const qualityMap: Record<string, VideoQuality> = {
-      '240p': 'P240',
-      '360p': 'P360',
-      '480p': 'P480',
-      '720p': 'P720',
-      '1080p': 'P1080',
-      '4k': 'P4K',
-    };
-
     const inputQuality = body.quality.toLowerCase();
     const mappedQuality = qualityMap[inputQuality];
 
